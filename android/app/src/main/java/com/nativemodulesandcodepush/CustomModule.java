@@ -5,6 +5,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
+import com.facebook.react.bridge.Callback;
 import com.facebook.react.bridge.Promise;
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
@@ -17,8 +18,9 @@ public class CustomModule extends ReactContextBaseJavaModule {
         reactContext = reactApplicationContext;
     }
     @ReactMethod
-    public void showToast(){
-        Toast.makeText(reactContext, "Native Module Android Toast",Toast.LENGTH_LONG).show();
+    public void showToast(String message, Callback successCallback){
+        Toast.makeText(reactContext, message,Toast.LENGTH_LONG).show();
+        successCallback.invoke("Successful Toast");
     }
     @ReactMethod void getDeviceID(Promise promise){
         try{

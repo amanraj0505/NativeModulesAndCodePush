@@ -1,14 +1,18 @@
 import React, {useEffect, useState} from 'react';
-import {SafeAreaView, Text} from 'react-native';
+import {Platform, SafeAreaView, Text} from 'react-native';
 import CustomModule from './CustomModule';
 const App = () => {
   const [deviceID, setDeviceID] = useState('');
   useEffect(() => {
-    CustomModule.showToast();
-    const getAndoridDeviceID = async () => {
-      setDeviceID(await CustomModule.getDeviceID());
-    };
-    getAndoridDeviceID();
+    if (Platform.OS === 'android') {
+      CustomModule.showToast('Hello Android Native Module', message => {
+        console.log(message);
+      });
+      const getAndoridDeviceID = async () => {
+        setDeviceID(await CustomModule.getDeviceID());
+      };
+      getAndoridDeviceID();
+    }
   }, []);
   return (
     <SafeAreaView style={{justifyContent: 'center', alignItems: 'center'}}>
@@ -17,6 +21,7 @@ const App = () => {
           fontStyle: 'italic',
           fontWeight: 'bold',
           marginTop: 30,
+          color: 'red',
         }}>
         NATIVE MODULES
       </Text>
